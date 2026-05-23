@@ -6,6 +6,51 @@
   <title>Our Founder | Prakhar Enterprises</title>
   <meta name="description" content="Meet Asmit Prakhar, Founder & CEO of Prakhar Enterprises. Entrepreneur with rich experience in Startups, E-commerce operations, and high-impact marketing strategies.">
   <link rel="stylesheet" href="style.css?v=1.0.4">
+  <style>
+    /* Custom Responsive Layouts for Our Founder Page */
+    .founder-about-grid {
+      display: grid;
+      grid-template-columns: 38% 62%;
+      gap: 5rem;
+      align-items: center;
+    }
+    
+    .founder-pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-bottom: 5rem;
+    }
+
+    @media (max-width: 991px) {
+      .founder-about-grid {
+        grid-template-columns: 1fr;
+        gap: 3.5rem;
+        text-align: center;
+      }
+      .founder-visual-wrap {
+        order: -1; /* Keep the photo at the top when stacked */
+      }
+      .founder-pillars-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+      .about-brand-column {
+        align-items: center;
+        text-align: center;
+      }
+      .neon-badge-mini {
+        align-self: center !important;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .founder-pillars-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+  </style>
 </head>
 <body class="js-enabled">
 
@@ -51,7 +96,7 @@
       </a>
 
       <!-- Symmetrical Founder Grid -->
-      <div class="enterprise-about-grid" style="grid-template-columns: 40% 60%; gap: 4rem; align-items: center;">
+      <div class="founder-about-grid">
         
         <!-- Left Column: Photo Card -->
         <div class="founder-visual-wrap" style="position: relative; width: 100%; display: flex; justify-content: center;">
@@ -119,7 +164,7 @@
       <!-- FOUNDER LEADERSHIP CORE GRID -->
       <h3 style="font-family: var(--ff-display); font-size: 1.5rem; color: #fff; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 6rem; text-align: center;">Strategic Execution Framework</h3>
       
-      <div class="enterprise-features-grid" style="grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 5rem;">
+      <div class="founder-pillars-grid">
         
         <!-- Pillar 1 -->
         <div class="feature-item spotlight-card glass-card" style="padding: 2.2rem 1.8rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.04); display: flex; flex-direction: column; gap: 1.2rem;">
