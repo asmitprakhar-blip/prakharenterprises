@@ -75,14 +75,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const dismissPreloader = () => {
     if (preloader && !preloader.classList.contains('fade-out')) {
       preloader.classList.add('fade-out');
-      // Kickstart animations for elements already inside the viewport
-      document.querySelectorAll('.reveal-node').forEach(node => {
-        const rect = node.getBoundingClientRect();
-        if (rect.top < window.innerHeight) {
-          node.classList.add('revealed');
-        }
-      });
     }
+    // Kickstart animations for elements already inside the viewport
+    document.querySelectorAll('.reveal-node').forEach(node => {
+      const rect = node.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        node.classList.add('revealed');
+      }
+    });
   };
 
   // Immediate or load-based dismissal (Highly responsive check)
