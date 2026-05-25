@@ -699,17 +699,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const submitBtn = document.getElementById('popup-submit-btn');
 
   const STORAGE_KEY = 'summit_lead_captured';
-  const STORAGE_EXPIRY_DAYS = 7;
   const POPUP_DELAY_MS = 10000;
 
   const checkAndLaunchPopup = () => {
     const savedData = localStorage.getItem(STORAGE_KEY);
     if (savedData) {
-      const parsed = JSON.parse(savedData);
-      const differenceDays = (Date.now() - parsed.timestamp) / (1000 * 60 * 60 * 24);
-      if (differenceDays < STORAGE_EXPIRY_DAYS) {
-        return;
-      }
+      return;
     }
 
     setTimeout(() => {
