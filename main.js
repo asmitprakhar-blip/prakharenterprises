@@ -7,6 +7,10 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   
+  // Global Telegram bot configuration for all lead capture and ticket forms
+  const TELEGRAM_BOT_TOKEN = '8942733766:AAHelyWJHJ57zf2LGNeX7tCzxNj_X7gqxX4';
+  const TELEGRAM_CHAT_ID = '8123459698';
+  
   // Pro-actively initialize Lucide icons to fix vanished icons bug
   if (typeof lucide !== 'undefined') {
     lucide.createIcons();
@@ -423,33 +427,168 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // --- INTERACTIVE PILLAR SELECTOR AND TICKET DYNAMICS ---
+  const pillarCards = document.querySelectorAll('.tier-pillar-card');
+  
   if (passTierSelect && ticketPassCard) {
+    // SVGs for the 4 Medallions
+    const vvipMedallion = `<svg viewBox="0 0 100 100" style="width: 70px; height: 70px; filter: drop-shadow(0 0 12px rgba(192, 70, 255, 0.5));">
+      <circle cx="50" cy="50" r="45" fill="rgba(192, 70, 255, 0.08)" stroke="var(--accent-purple)" stroke-width="2.5" />
+      <path d="M50 30 L65 42 L59 65 L41 65 L35 42 Z" fill="none" stroke="var(--accent-purple)" stroke-width="2.5" />
+      <path d="M50 30 L50 65 M35 42 L50 42 L65 42 M35 42 L50 65 L65 42" stroke="var(--accent-purple)" stroke-width="1.5" />
+      <path d="M38 25 L43 20 L50 24 L57 20 L62 25 Z" fill="var(--accent-pink)" />
+    </svg>`;
+
+    const platinumMedallion = `<svg viewBox="0 0 100 100" style="width: 70px; height: 70px; filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.3));">
+      <circle cx="50" cy="50" r="45" fill="rgba(0, 229, 255, 0.05)" stroke="var(--accent-blue)" stroke-width="2" />
+      <polygon points="50,22 58,38 76,41 63,54 66,72 50,63 34,72 37,54 24,41 42,38" fill="rgba(0, 229, 255, 0.12)" stroke="var(--accent-blue)" stroke-width="2" />
+    </svg>`;
+
+    const goldMedallion = `<svg viewBox="0 0 100 100" style="width: 70px; height: 70px; filter: drop-shadow(0 0 10px rgba(255, 179, 0, 0.4));">
+      <circle cx="50" cy="50" r="45" fill="rgba(255, 179, 0, 0.05)" stroke="var(--accent-amber)" stroke-width="2.5" />
+      <polygon points="50,22 58,38 76,41 63,54 66,72 50,63 34,72 37,54 24,41 42,38" fill="rgba(255, 179, 0, 0.12)" stroke="var(--accent-amber)" stroke-width="2.5" />
+    </svg>`;
+
+    const silverMedallion = `<svg viewBox="0 0 100 100" style="width: 70px; height: 70px; filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));">
+      <circle cx="50" cy="50" r="45" fill="rgba(255, 255, 255, 0.03)" stroke="rgba(255, 255, 255, 0.4)" stroke-width="2" />
+      <polygon points="50,22 58,38 76,41 63,54 66,72 50,63 34,72 37,54 24,41 42,38" fill="rgba(255, 255, 255, 0.08)" stroke="rgba(255, 255, 255, 0.5)" stroke-width="2" />
+    </svg>`;
+
+    // Wire up custom clickable pillar cards (CSS active state driven!)
+    pillarCards.forEach(card => {
+      card.addEventListener('click', () => {
+        pillarCards.forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+        
+        const selectedTier = card.getAttribute('data-tier');
+        passTierSelect.value = selectedTier;
+        passTierSelect.dispatchEvent(new Event('change'));
+      });
+    });
+
+    // Handle ticket changes dynamically on change of hidden select
     passTierSelect.addEventListener('change', (e) => {
-      const badge = ticketPassCard.querySelector('.neon-badge span');
-      if (badge) {
-        if (e.target.value === 'Premium VIP Delegate') {
-          badge.innerText = 'VIP DELEGATE ACCESS';
-          ticketPassCard.style.borderColor = 'var(--accent-orange)';
-        } else if (e.target.value === 'Trade Representative') {
-          badge.innerText = 'TRADE REP ACCESS';
-          ticketPassCard.style.borderColor = 'var(--accent-pink)';
-        } else {
-          badge.innerText = 'DELEGATE ACCESS';
-          ticketPassCard.style.borderColor = 'rgba(176, 94, 194, 0.15)';
+      const badge = ticketPassCard.querySelector('.neon-badge');
+      const header = ticketPassCard.querySelector('.ticket-header');
+      const divider = ticketPassCard.querySelector('.ticket-divider-line');
+      const logoOrb = ticketPassCard.querySelector('.logo-glow-orb');
+      const previewTierVal = document.getElementById('preview-tier-val');
+      const previewPriceVal = document.getElementById('preview-price-val');
+      const medallionContainer = document.getElementById('preview-medallion-container');
+
+      const tierValue = e.target.value;
+
+      if (tierValue === 'VVIP') {
+        if (badge) {
+          badge.innerText = 'VVIP ACCESS';
+          badge.style.color = 'var(--accent-purple)';
+          badge.style.borderColor = 'rgba(192, 70, 255, 0.35)';
+          badge.style.background = 'rgba(192, 70, 255, 0.08)';
         }
+        if (logoOrb) logoOrb.style.background = 'linear-gradient(135deg, var(--accent-purple), var(--accent-pink))';
+        ticketPassCard.style.borderColor = 'var(--accent-purple)';
+        ticketPassCard.style.boxShadow = '0 35px 80px -20px rgba(0, 0, 0, 0.95), 0 0 45px rgba(192, 70, 255, 0.25)';
+        ticketPassCard.style.background = 'linear-gradient(135deg, rgba(28, 10, 48, 0.95) 0%, rgba(12, 6, 20, 0.98) 100%)';
+        if (header) header.style.borderBottomColor = 'rgba(192, 70, 255, 0.25)';
+        if (divider) divider.style.borderTopColor = 'rgba(192, 70, 255, 0.25)';
+        
+        if (previewTierVal) {
+          previewTierVal.innerText = 'VVIP PASS';
+          previewTierVal.style.color = 'var(--accent-purple)';
+        }
+        if (previewPriceVal) previewPriceVal.innerText = '';
+        if (medallionContainer) medallionContainer.innerHTML = vvipMedallion;
+
+      } else if (tierValue === 'Platinum') {
+        if (badge) {
+          badge.innerText = 'PLATINUM ACCESS';
+          badge.style.color = 'var(--accent-blue)';
+          badge.style.borderColor = 'rgba(0, 229, 255, 0.35)';
+          badge.style.background = 'rgba(0, 229, 255, 0.08)';
+        }
+        if (logoOrb) logoOrb.style.background = 'linear-gradient(135deg, var(--accent-blue), var(--accent-purple))';
+        ticketPassCard.style.borderColor = 'var(--accent-blue)';
+        ticketPassCard.style.boxShadow = '0 35px 80px -20px rgba(0, 0, 0, 0.95), 0 0 35px rgba(0, 229, 255, 0.2)';
+        ticketPassCard.style.background = 'linear-gradient(135deg, rgba(10, 22, 45, 0.95) 0%, rgba(6, 10, 24, 0.98) 100%)';
+        if (header) header.style.borderBottomColor = 'rgba(0, 229, 255, 0.2)';
+        if (divider) divider.style.borderTopColor = 'rgba(0, 229, 255, 0.2)';
+
+        if (previewTierVal) {
+          previewTierVal.innerText = 'PLATINUM PASS';
+          previewTierVal.style.color = 'var(--accent-blue)';
+        }
+        if (previewPriceVal) previewPriceVal.innerText = '';
+        if (medallionContainer) medallionContainer.innerHTML = platinumMedallion;
+
+      } else if (tierValue === 'Gold') {
+        if (badge) {
+          badge.innerText = 'GOLD ACCESS';
+          badge.style.color = 'var(--accent-amber)';
+          badge.style.borderColor = 'rgba(255, 179, 0, 0.35)';
+          badge.style.background = 'rgba(255, 179, 0, 0.08)';
+        }
+        if (logoOrb) logoOrb.style.background = 'linear-gradient(135deg, var(--accent-orange), var(--accent-amber))';
+        ticketPassCard.style.borderColor = 'var(--accent-amber)';
+        ticketPassCard.style.boxShadow = '0 35px 80px -20px rgba(0, 0, 0, 0.95), 0 0 40px rgba(255, 179, 0, 0.22)';
+        ticketPassCard.style.background = 'linear-gradient(135deg, rgba(32, 22, 10, 0.95) 0%, rgba(14, 8, 6, 0.98) 100%)';
+        if (header) header.style.borderBottomColor = 'rgba(255, 179, 0, 0.2)';
+        if (divider) divider.style.borderTopColor = 'rgba(255, 179, 0, 0.2)';
+
+        if (previewTierVal) {
+          previewTierVal.innerText = 'GOLD PASS';
+          previewTierVal.style.color = 'var(--accent-amber)';
+        }
+        if (previewPriceVal) previewPriceVal.innerText = '';
+        if (medallionContainer) medallionContainer.innerHTML = goldMedallion;
+
+      } else if (tierValue === 'Silver') {
+        if (badge) {
+          badge.innerText = 'SILVER ACCESS';
+          badge.style.color = '#cccccc';
+          badge.style.borderColor = 'rgba(255, 255, 255, 0.25)';
+          badge.style.background = 'rgba(255, 255, 255, 0.05)';
+        }
+        if (logoOrb) logoOrb.style.background = 'linear-gradient(135deg, #888888, #cccccc)';
+        ticketPassCard.style.borderColor = 'rgba(255, 255, 255, 0.25)';
+        ticketPassCard.style.boxShadow = '0 35px 80px -20px rgba(0, 0, 0, 0.95), 0 0 25px rgba(255, 255, 255, 0.08)';
+        ticketPassCard.style.background = 'linear-gradient(135deg, rgba(22, 22, 28, 0.95) 0%, rgba(12, 12, 16, 0.98) 100%)';
+        if (header) header.style.borderBottomColor = 'rgba(255, 255, 255, 0.1)';
+        if (divider) divider.style.borderTopColor = 'rgba(255, 255, 255, 0.1)';
+
+        if (previewTierVal) {
+          previewTierVal.innerText = 'SILVER PASS';
+          previewTierVal.style.color = '#cccccc';
+        }
+        if (previewPriceVal) previewPriceVal.innerText = '';
+        if (medallionContainer) medallionContainer.innerHTML = silverMedallion;
       }
     });
+
+    // Initialize the ticket preview visual states on DOM load
+    passTierSelect.dispatchEvent(new Event('change'));
   }
 
   // 17. GLOBAL CONFETTI LAUNCHER ON SUCCESSFUL PASS GENERATION
   window.triggerPassSuccess = () => {
+    const activeTier = passTierSelect ? passTierSelect.value : 'VVIP';
+    let confettiColors = ['#ff6a00', '#ff4fd8', '#c046ff', '#ffffff'];
+    
+    if (activeTier === 'VVIP') {
+      confettiColors = ['#c046ff', '#ff4fd8', '#ffffff'];
+    } else if (activeTier === 'Platinum') {
+      confettiColors = ['#00e5ff', '#ffffff', '#0077ff'];
+    } else if (activeTier === 'Gold') {
+      confettiColors = ['#ffb300', '#ff6a00', '#ffffff'];
+    } else if (activeTier === 'Silver') {
+      confettiColors = ['#cccccc', '#888888', '#ffffff'];
+    }
+
     if (typeof confetti !== 'undefined') {
-      const colors = ['#ff6a00', '#ff4fd8', '#c046ff', '#ffffff'];
       confetti({
         particleCount: 150,
         spread: 80,
         origin: { y: 0.6 },
-        colors: colors
+        colors: confettiColors
       });
       
       // Secondary staggered bursts for world-class feel
@@ -459,7 +598,7 @@ document.addEventListener('DOMContentLoaded', () => {
           angle: 60,
           spread: 55,
           origin: { x: 0 },
-          colors: colors
+          colors: confettiColors
         });
       }, 250);
       
@@ -469,11 +608,246 @@ document.addEventListener('DOMContentLoaded', () => {
           angle: 120,
           spread: 55,
           origin: { x: 1 },
-          colors: colors
+          colors: confettiColors
         });
       }, 400);
     }
-    alert('Congratulations! Your Startup Business Summit 2026 Delegate Pass has been generated successfully.');
+    
+    setTimeout(() => {
+      alert(`Congratulations! Your Startup Business Summit 2026 ${activeTier} Delegate Pass has been generated successfully. Redirecting you to complete your official registration...`);
+      window.open('https://forms.gle/C9rwmU8zvQQmxBwy8', '_blank');
+    }, 600);
   };
 
+  // --- INTERACTIVE DELEGATE PASS FORM SUBMISSION HANDLER ---
+  const delegateForm = document.getElementById('delegate-pass-form');
+  if (delegateForm) {
+    delegateForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const nameVal = fullNameInput.value.trim();
+      const designationVal = designationInput.value.trim();
+      const organizationVal = organizationInput.value.trim();
+      const tierVal = passTierSelect ? passTierSelect.value : 'VVIP';
+
+      // 1. Sleek loading state
+      const submitBtn = delegateForm.querySelector('.ticket-submit-button');
+      let originalBtnHtml = '';
+      if (submitBtn) {
+        originalBtnHtml = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `
+          <span>Securing Access Pass...</span>
+          <span class="btn-loader" style="margin-left: 8px;"><i data-lucide="loader-2" class="spin-animation" style="width: 16px; height: 16px;"></i></span>
+        `;
+        if (typeof lucide !== 'undefined') {
+          lucide.createIcons();
+        }
+      }
+
+      const dateTime = new Date().toLocaleString();
+      const pageUrl = window.location.href;
+
+      const textMessage = `
+🎟️ *NEW TICKET PASS CLAIMED*
+
+👤 *Name:* ${nameVal}
+💼 *Designation:* ${designationVal}
+🏢 *Organization:* ${organizationVal}
+🌟 *Ticket Tier:* ${tierVal}
+📅 *Date/Time:* ${dateTime}
+🔗 *Source Page:* ${pageUrl}
+      `;
+
+      try {
+        const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: textMessage,
+            parse_mode: 'Markdown'
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('Telegram Bot API response not OK');
+        }
+      } catch (err) {
+        console.error('Failed to dispatch pass generation to Telegram:', err);
+      } finally {
+        if (submitBtn) {
+          // Restore button state
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnHtml;
+          if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+          }
+        }
+        // Trigger the success transitions (confetti & redirect)
+        window.triggerPassSuccess();
+      }
+    });
+  }
+
+  // --- PREMIUM LEAD CAPTURE SYSTEM ---
+  const popupOverlay = document.getElementById('lead-capture-modal');
+  const popupForm = document.getElementById('lead-capture-form');
+  const successContainer = document.getElementById('popup-success-msg');
+  const submitBtn = document.getElementById('popup-submit-btn');
+
+  const STORAGE_KEY = 'summit_lead_captured';
+  const STORAGE_EXPIRY_DAYS = 7;
+  const POPUP_DELAY_MS = 10000;
+
+  const checkAndLaunchPopup = () => {
+    const savedData = localStorage.getItem(STORAGE_KEY);
+    if (savedData) {
+      const parsed = JSON.parse(savedData);
+      const differenceDays = (Date.now() - parsed.timestamp) / (1000 * 60 * 60 * 24);
+      if (differenceDays < STORAGE_EXPIRY_DAYS) {
+        return;
+      }
+    }
+
+    setTimeout(() => {
+      if (popupOverlay) {
+        popupOverlay.style.display = 'flex';
+        popupOverlay.offsetHeight;
+        popupOverlay.classList.add('active');
+        document.body.classList.add('modal-open');
+        if (typeof lucide !== 'undefined') {
+          lucide.createIcons();
+        }
+      }
+    }, POPUP_DELAY_MS);
+  };
+
+  if (popupOverlay && popupForm) {
+    checkAndLaunchPopup();
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && popupOverlay.classList.contains('active')) {
+        e.preventDefault();
+      }
+    });
+
+    const nameInput = document.getElementById('popup-name');
+    const emailInput = document.getElementById('popup-email');
+    const phoneInput = document.getElementById('popup-phone');
+
+    const nameError = document.getElementById('name-error');
+    const emailError = document.getElementById('email-error');
+    const phoneError = document.getElementById('phone-error');
+
+    popupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      nameError.textContent = '';
+      emailError.textContent = '';
+      phoneError.textContent = '';
+
+      let isValid = true;
+
+      const nameVal = nameInput.value.trim();
+      if (!nameVal) {
+        nameError.textContent = 'Full Name is required';
+        isValid = false;
+      }
+
+      const emailVal = emailInput.value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailVal) {
+        emailError.textContent = 'Email Address is required';
+        isValid = false;
+      } else if (!emailRegex.test(emailVal)) {
+        emailError.textContent = 'Please enter a valid email address';
+        isValid = false;
+      }
+
+      const phoneVal = phoneInput.value.trim();
+      if (!phoneVal) {
+        phoneError.textContent = 'Phone Number is required';
+        isValid = false;
+      }
+
+      if (!isValid) return;
+
+      submitBtn.disabled = true;
+      submitBtn.querySelector('.btn-text').textContent = 'Verifying Access...';
+      submitBtn.querySelector('.btn-loader').style.display = 'inline-block';
+
+      const dateTime = new Date().toLocaleString();
+      const pageUrl = window.location.href;
+
+      const textMessage = `
+🔐 *NEW EXECUTIVE LEAD CAPTURE*
+
+👤 *Name:* ${nameVal}
+📧 *Email:* ${emailVal}
+📞 *Phone:* ${phoneVal}
+📅 *Date/Time:* ${dateTime}
+🔗 *Source Page:* ${pageUrl}
+      `;
+
+      try {
+        const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: textMessage,
+            parse_mode: 'Markdown'
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('Telegram bot API request failed');
+        }
+
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          name: nameVal,
+          email: emailVal,
+          phone: phoneVal,
+          timestamp: Date.now()
+        }));
+
+        popupForm.style.opacity = '0';
+        setTimeout(() => {
+          popupForm.style.display = 'none';
+          successContainer.style.display = 'flex';
+          
+          if (typeof confetti !== 'undefined') {
+            confetti({
+              particleCount: 120,
+              spread: 80,
+              origin: { y: 0.65 },
+              colors: ['#ff6a00', '#ff4fd8', '#c046ff']
+            });
+          }
+        }, 400);
+
+        setTimeout(() => {
+          popupOverlay.classList.remove('active');
+          document.body.classList.remove('modal-open');
+          setTimeout(() => {
+            popupOverlay.style.display = 'none';
+          }, 600);
+        }, 2200);
+
+      } catch (err) {
+        console.error(err);
+        submitBtn.disabled = false;
+        submitBtn.querySelector('.btn-text').textContent = 'Continue to Website';
+        submitBtn.querySelector('.btn-loader').style.display = 'none';
+        phoneError.textContent = 'Submission failed. Please check internet connection and try again.';
+      }
+    });
+  }
+
 });
+
