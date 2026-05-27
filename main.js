@@ -15,6 +15,15 @@ document.addEventListener('DOMContentLoaded', () => {
   if (typeof lucide !== 'undefined') {
     lucide.createIcons();
   }
+
+  // Initialize navbar homepage status
+  const navbar = document.getElementById('navbar');
+  if (navbar) {
+    const isHomepage = document.getElementById('hero') !== null;
+    if (isHomepage) {
+      navbar.classList.add('navbar-homepage');
+    }
+  }
   
   // 1. INITIALIZE LENIS SMOOTH SCROLL (With luxurious inertial kinetics)
   let lenis;
@@ -23,6 +32,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!tickingScrollY) {
       window.requestAnimationFrame(() => {
         document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
+        
+        const currentNavbar = document.getElementById('navbar');
+        if (currentNavbar) {
+          if (window.scrollY > 20) {
+            currentNavbar.classList.add('scrolled');
+          } else {
+            currentNavbar.classList.remove('scrolled');
+          }
+        }
+        
         tickingScrollY = false;
       });
       tickingScrollY = true;
@@ -432,26 +451,26 @@ document.addEventListener('DOMContentLoaded', () => {
   
   if (passTierSelect && ticketPassCard) {
     // SVGs for the 4 Medallions
-    const vvipMedallion = `<svg viewBox="0 0 100 100" style="width: 70px; height: 70px; filter: drop-shadow(0 0 12px rgba(192, 70, 255, 0.5));">
-      <circle cx="50" cy="50" r="45" fill="rgba(192, 70, 255, 0.08)" stroke="var(--accent-purple)" stroke-width="2.5" />
-      <path d="M50 30 L65 42 L59 65 L41 65 L35 42 Z" fill="none" stroke="var(--accent-purple)" stroke-width="2.5" />
-      <path d="M50 30 L50 65 M35 42 L50 42 L65 42 M35 42 L50 65 L65 42" stroke="var(--accent-purple)" stroke-width="1.5" />
-      <path d="M38 25 L43 20 L50 24 L57 20 L62 25 Z" fill="var(--accent-pink)" />
+    const vvipMedallion = `<svg viewBox="0 0 100 100" style="width: 70px; height: 70px;">
+      <circle cx="50" cy="50" r="45" fill="rgba(0, 0, 0, 0.02)" stroke="#000000" stroke-width="2.5" />
+      <path d="M50 30 L65 42 L59 65 L41 65 L35 42 Z" fill="none" stroke="#000000" stroke-width="2.5" />
+      <path d="M50 30 L50 65 M35 42 L50 42 L65 42 M35 42 L50 65 L65 42" stroke="#000000" stroke-width="1.5" />
+      <path d="M38 25 L43 20 L50 24 L57 20 L62 25 Z" fill="#000000" />
     </svg>`;
 
-    const platinumMedallion = `<svg viewBox="0 0 100 100" style="width: 70px; height: 70px; filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.3));">
-      <circle cx="50" cy="50" r="45" fill="rgba(0, 229, 255, 0.05)" stroke="var(--accent-blue)" stroke-width="2" />
-      <polygon points="50,22 58,38 76,41 63,54 66,72 50,63 34,72 37,54 24,41 42,38" fill="rgba(0, 229, 255, 0.12)" stroke="var(--accent-blue)" stroke-width="2" />
+    const platinumMedallion = `<svg viewBox="0 0 100 100" style="width: 70px; height: 70px;">
+      <circle cx="50" cy="50" r="45" fill="rgba(0, 0, 0, 0.02)" stroke="#000000" stroke-width="2" />
+      <polygon points="50,22 58,38 76,41 63,54 66,72 50,63 34,72 37,54 24,41 42,38" fill="rgba(0, 0, 0, 0.05)" stroke="#000000" stroke-width="2" />
     </svg>`;
 
-    const goldMedallion = `<svg viewBox="0 0 100 100" style="width: 70px; height: 70px; filter: drop-shadow(0 0 10px rgba(255, 179, 0, 0.4));">
-      <circle cx="50" cy="50" r="45" fill="rgba(255, 179, 0, 0.05)" stroke="var(--accent-amber)" stroke-width="2.5" />
-      <polygon points="50,22 58,38 76,41 63,54 66,72 50,63 34,72 37,54 24,41 42,38" fill="rgba(255, 179, 0, 0.12)" stroke="var(--accent-amber)" stroke-width="2.5" />
+    const goldMedallion = `<svg viewBox="0 0 100 100" style="width: 70px; height: 70px;">
+      <circle cx="50" cy="50" r="45" fill="rgba(0, 0, 0, 0.02)" stroke="#000000" stroke-width="2.5" />
+      <polygon points="50,22 58,38 76,41 63,54 66,72 50,63 34,72 37,54 24,41 42,38" fill="rgba(0, 0, 0, 0.05)" stroke="#000000" stroke-width="2.5" />
     </svg>`;
 
-    const silverMedallion = `<svg viewBox="0 0 100 100" style="width: 70px; height: 70px; filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));">
-      <circle cx="50" cy="50" r="45" fill="rgba(255, 255, 255, 0.03)" stroke="rgba(255, 255, 255, 0.4)" stroke-width="2" />
-      <polygon points="50,22 58,38 76,41 63,54 66,72 50,63 34,72 37,54 24,41 42,38" fill="rgba(255, 255, 255, 0.08)" stroke="rgba(255, 255, 255, 0.5)" stroke-width="2" />
+    const silverMedallion = `<svg viewBox="0 0 100 100" style="width: 70px; height: 70px;">
+      <circle cx="50" cy="50" r="45" fill="rgba(0, 0, 0, 0.02)" stroke="#000000" stroke-width="2" />
+      <polygon points="50,22 58,38 76,41 63,54 66,72 50,63 34,72 37,54 24,41 42,38" fill="rgba(0, 0, 0, 0.03)" stroke="#000000" stroke-width="2" />
     </svg>`;
 
     // Wire up custom clickable pillar cards (CSS active state driven!)
@@ -478,87 +497,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const tierValue = e.target.value;
 
+      // 1. Force Clean Monochrome styles globally across all tiers
+      ticketPassCard.style.background = '#ffffff';
+      ticketPassCard.style.borderColor = '#000000';
+      ticketPassCard.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.06)';
+      
+      if (logoOrb) logoOrb.style.background = '#000000';
+      if (header) header.style.borderBottomColor = 'rgba(0, 0, 0, 0.08)';
+      if (divider) divider.style.borderTopColor = 'rgba(0, 0, 0, 0.08)';
+
+      if (badge) {
+        badge.style.color = '#000000';
+        badge.style.borderColor = 'rgba(0, 0, 0, 0.15)';
+        badge.style.background = 'rgba(0, 0, 0, 0.03)';
+      }
+
+      if (previewTierVal) {
+        previewTierVal.style.color = '#000000';
+      }
+
+      // 2. Set dynamic content & SVGs based on selection
       if (tierValue === 'VVIP') {
-        if (badge) {
-          badge.innerText = 'VVIP ACCESS';
-          badge.style.color = 'var(--accent-purple)';
-          badge.style.borderColor = 'rgba(192, 70, 255, 0.35)';
-          badge.style.background = 'rgba(192, 70, 255, 0.08)';
-        }
-        if (logoOrb) logoOrb.style.background = 'linear-gradient(135deg, var(--accent-purple), var(--accent-pink))';
-        ticketPassCard.style.borderColor = 'var(--accent-purple)';
-        ticketPassCard.style.boxShadow = '0 35px 80px -20px rgba(0, 0, 0, 0.95), 0 0 45px rgba(192, 70, 255, 0.25)';
-        ticketPassCard.style.background = 'linear-gradient(135deg, rgba(28, 10, 48, 0.95) 0%, rgba(12, 6, 20, 0.98) 100%)';
-        if (header) header.style.borderBottomColor = 'rgba(192, 70, 255, 0.25)';
-        if (divider) divider.style.borderTopColor = 'rgba(192, 70, 255, 0.25)';
-        
-        if (previewTierVal) {
-          previewTierVal.innerText = 'VVIP PASS';
-          previewTierVal.style.color = 'var(--accent-purple)';
-        }
+        if (badge) badge.innerText = 'VVIP ACCESS';
+        if (previewTierVal) previewTierVal.innerText = 'VVIP PASS';
         if (previewPriceVal) previewPriceVal.innerText = '';
         if (medallionContainer) medallionContainer.innerHTML = vvipMedallion;
 
       } else if (tierValue === 'Platinum') {
-        if (badge) {
-          badge.innerText = 'PLATINUM ACCESS';
-          badge.style.color = 'var(--accent-blue)';
-          badge.style.borderColor = 'rgba(0, 229, 255, 0.35)';
-          badge.style.background = 'rgba(0, 229, 255, 0.08)';
-        }
-        if (logoOrb) logoOrb.style.background = 'linear-gradient(135deg, var(--accent-blue), var(--accent-purple))';
-        ticketPassCard.style.borderColor = 'var(--accent-blue)';
-        ticketPassCard.style.boxShadow = '0 35px 80px -20px rgba(0, 0, 0, 0.95), 0 0 35px rgba(0, 229, 255, 0.2)';
-        ticketPassCard.style.background = 'linear-gradient(135deg, rgba(10, 22, 45, 0.95) 0%, rgba(6, 10, 24, 0.98) 100%)';
-        if (header) header.style.borderBottomColor = 'rgba(0, 229, 255, 0.2)';
-        if (divider) divider.style.borderTopColor = 'rgba(0, 229, 255, 0.2)';
-
-        if (previewTierVal) {
-          previewTierVal.innerText = 'PLATINUM PASS';
-          previewTierVal.style.color = 'var(--accent-blue)';
-        }
+        if (badge) badge.innerText = 'PLATINUM ACCESS';
+        if (previewTierVal) previewTierVal.innerText = 'PLATINUM PASS';
         if (previewPriceVal) previewPriceVal.innerText = '';
         if (medallionContainer) medallionContainer.innerHTML = platinumMedallion;
 
       } else if (tierValue === 'Gold') {
-        if (badge) {
-          badge.innerText = 'GOLD ACCESS';
-          badge.style.color = 'var(--accent-amber)';
-          badge.style.borderColor = 'rgba(255, 179, 0, 0.35)';
-          badge.style.background = 'rgba(255, 179, 0, 0.08)';
-        }
-        if (logoOrb) logoOrb.style.background = 'linear-gradient(135deg, var(--accent-orange), var(--accent-amber))';
-        ticketPassCard.style.borderColor = 'var(--accent-amber)';
-        ticketPassCard.style.boxShadow = '0 35px 80px -20px rgba(0, 0, 0, 0.95), 0 0 40px rgba(255, 179, 0, 0.22)';
-        ticketPassCard.style.background = 'linear-gradient(135deg, rgba(32, 22, 10, 0.95) 0%, rgba(14, 8, 6, 0.98) 100%)';
-        if (header) header.style.borderBottomColor = 'rgba(255, 179, 0, 0.2)';
-        if (divider) divider.style.borderTopColor = 'rgba(255, 179, 0, 0.2)';
-
-        if (previewTierVal) {
-          previewTierVal.innerText = 'GOLD PASS';
-          previewTierVal.style.color = 'var(--accent-amber)';
-        }
+        if (badge) badge.innerText = 'GOLD ACCESS';
+        if (previewTierVal) previewTierVal.innerText = 'GOLD PASS';
         if (previewPriceVal) previewPriceVal.innerText = '';
         if (medallionContainer) medallionContainer.innerHTML = goldMedallion;
 
       } else if (tierValue === 'Silver') {
-        if (badge) {
-          badge.innerText = 'SILVER ACCESS';
-          badge.style.color = '#cccccc';
-          badge.style.borderColor = 'rgba(255, 255, 255, 0.25)';
-          badge.style.background = 'rgba(255, 255, 255, 0.05)';
-        }
-        if (logoOrb) logoOrb.style.background = 'linear-gradient(135deg, #888888, #cccccc)';
-        ticketPassCard.style.borderColor = 'rgba(255, 255, 255, 0.25)';
-        ticketPassCard.style.boxShadow = '0 35px 80px -20px rgba(0, 0, 0, 0.95), 0 0 25px rgba(255, 255, 255, 0.08)';
-        ticketPassCard.style.background = 'linear-gradient(135deg, rgba(22, 22, 28, 0.95) 0%, rgba(12, 12, 16, 0.98) 100%)';
-        if (header) header.style.borderBottomColor = 'rgba(255, 255, 255, 0.1)';
-        if (divider) divider.style.borderTopColor = 'rgba(255, 255, 255, 0.1)';
-
-        if (previewTierVal) {
-          previewTierVal.innerText = 'SILVER PASS';
-          previewTierVal.style.color = '#cccccc';
-        }
+        if (badge) badge.innerText = 'SILVER ACCESS';
+        if (previewTierVal) previewTierVal.innerText = 'SILVER PASS';
         if (previewPriceVal) previewPriceVal.innerText = '';
         if (medallionContainer) medallionContainer.innerHTML = silverMedallion;
       }
@@ -844,5 +823,49 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // --- INTERACTIVE TENTATIVE GUEST LINEUP TAB FILTERS ---
+  const lineupTabs = document.querySelectorAll('.lineup-tab');
+  const guestCardWrappers = document.querySelectorAll('.guest-card-wrapper');
+
+  if (lineupTabs.length > 0 && guestCardWrappers.length > 0) {
+    lineupTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        lineupTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        const filterVal = tab.getAttribute('data-filter');
+
+        guestCardWrappers.forEach(card => {
+          // Trigger buttery-smooth transition out
+          card.style.opacity = '0';
+          card.style.transform = 'scale(0.96) translateY(6px)';
+          
+          setTimeout(() => {
+            if (filterVal === 'all' || card.getAttribute('data-level') === filterVal) {
+              card.style.display = 'block';
+              // Force DOM reflow to make animation re-trigger correctly
+              card.offsetHeight;
+              card.style.opacity = '1';
+              card.style.transform = 'scale(1) translateY(0)';
+            } else {
+              card.style.display = 'none';
+            }
+          }, 300);
+        });
+
+        // Trigger Lenis scroll check update and Reveal observer update
+        setTimeout(() => {
+          document.querySelectorAll('.reveal-node').forEach(node => {
+            const rect = node.getBoundingClientRect();
+            if (rect.top < window.innerHeight) {
+              node.classList.add('revealed');
+            }
+          });
+        }, 350);
+      });
+    });
+  }
+
 });
+
 
