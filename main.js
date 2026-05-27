@@ -286,7 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
           entry.target.classList.add('revealed');
         }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+    }, { threshold: 0.02, rootMargin: '0px 0px -50px 0px' });
 
     revealNodes.forEach(node => revealObserver.observe(node));
 
