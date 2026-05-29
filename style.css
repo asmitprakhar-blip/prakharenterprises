@@ -6097,6 +6097,85 @@ section {
   color: #000000 !important;
 }
 
+/* ==========================================================================
+   11. MOBILE & RESPONSIVENESS CUSTOM ENHANCEMENTS & COMPATIBILITY
+   ========================================================================== */
+
+/* Scaled down Brand Logo on smaller devices to prevent layout collision */
+@media (max-width: 768px) {
+  .brand-logo {
+    font-size: 1.15rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-logo {
+    font-size: 0.92rem !important;
+    gap: 0.4rem !important;
+  }
+  .logo-glow-orb {
+    width: 10px !important;
+    height: 10px !important;
+  }
+}
+
+/* Maintain compact and premium Claim Pass button visible on mobile viewports */
+@media (max-width: 991px) {
+  .nav-actions .btn {
+    display: inline-flex !important;
+    padding: 0.5rem 1rem !important;
+    font-size: 0.78rem !important;
+    border-radius: 6px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-actions {
+    gap: 0.5rem !important;
+  }
+  .nav-actions .btn {
+    padding: 0.38rem 0.7rem !important;
+    font-size: 0.72rem !important;
+  }
+}
+
+/* Eliminate top scroll gap and make mobile menu slide perfectly on small screens */
+@media (max-width: 991px) {
+  .nav-menu {
+    top: 0 !important;
+    height: 100vh !important;
+    padding-top: 100px !important;
+    justify-content: flex-start !important;
+    gap: 2rem !important;
+  }
+}
+
+/* Corporate Tagline Divider Responsive Stacking */
+@media (max-width: 768px) {
+  .hero-divider-row {
+    flex-direction: column !important;
+    gap: 0.6rem !important;
+    margin: 1rem auto !important;
+  }
+  .hero-gradient-line {
+    width: 80px !important;
+    height: 1px !important;
+    flex-grow: 0 !important;
+  }
+  .hero-tagline-text {
+    font-size: 0.9rem !important;
+    text-align: center !important;
+  }
+}
+
+/* Disable hardcoded line breaks in hero corporate description on mobile devices */
+@media (max-width: 768px) {
+  .hero-corporate-desc br {
+    display: none !important;
+  }
+}
+
+
 
 
 
