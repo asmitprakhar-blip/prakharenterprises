@@ -6220,6 +6220,21 @@ section {
   color: #000000 !important;
 }
 
+/* Container & form padding overrides for perfect mobile compatibility */
+@media (max-width: 768px) {
+  .enterprise-container {
+    padding: 0 1.25rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .subpage-form-panel {
+    padding: 2rem 1.25rem !important;
+    margin-top: 2rem !important;
+  }
+}
+
+
 
 
 
