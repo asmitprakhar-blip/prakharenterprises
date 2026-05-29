@@ -6175,6 +6175,52 @@ section {
   }
 }
 
+/* ==========================================================================
+   12. OUR FOUNDER PAGE LIGHT-MODE CONTRAST OVERRIDES
+   ========================================================================== */
+.enterprise-about-section .enterprise-about-title {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  text-shadow: none !important;
+}
+
+.enterprise-about-section .enterprise-about-title span {
+  color: #9c7c5d !important;
+  -webkit-text-fill-color: #9c7c5d !important;
+}
+
+.enterprise-about-section .enterprise-about-desc {
+  color: #333333 !important;
+  text-shadow: none !important;
+}
+
+.enterprise-about-section .direct-executive-desk {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02) !important;
+}
+
+.enterprise-about-section .direct-executive-desk h4 {
+  color: #000000 !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+.enterprise-about-section .direct-executive-desk-row {
+  color: #333333 !important;
+}
+
+.enterprise-about-section .direct-executive-desk-row a {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+.enterprise-about-section .direct-executive-desk-icon {
+  background: rgba(0, 0, 0, 0.03) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  color: #000000 !important;
+}
+
+
 
 
 
